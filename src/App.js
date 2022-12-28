@@ -4,8 +4,12 @@ import {useState} from "react";
 import makeMap from "./data/makeMap";
 import makeFilter from "./data/makeFilter";
 import Modal from "./components/modal";
+import {themes, ThemeContext} from "./data/theme";
 
 function App() {
+
+    const [theme, setTheme] = useState(themes.light);
+
     let map = makeMap(data);
     const [open, setOpen] = useState(false);
     const [make, setMake] = useState(map.make);
@@ -14,7 +18,7 @@ function App() {
     const [kmRange, setKmRange] = useState({min: 0, max: 1000000});
     const [priceRange, setPriceRange] = useState({min: 0, max: 1000000});
     let filteredData = makeFilter(data, kmRange, priceRange, make, model, fuel);
-    let reset = ()=>{
+    let reset = () => {
         setMake(map.make);
         setModel(map.model);
         setFuel(map.fuel);
@@ -35,24 +39,42 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <button onClick={()=>{setOpen(true)}}>Open settings</button>
-            {open ? <Modal map={map} handleOpen={setOpen} handleMake={setMake} handleModel={setModel} handleFuel={setFuel} handleKm={setKmRange} handlePrice={setPriceRange} handleReset={reset}/> : <></>}
-            <table>
-                <thead>
-                <tr>
-                    <td>Make</td>
-                    <td>Model</td>
-                    <td>Fuel</td>
-                    <td>Price</td>
-                    <td>Km</td>
-                </tr>
-                </thead>
-                <tbody>
-                {table}
-                </tbody>
-            </table>
-        </div>
+        <ThemeContext.Provider value={theme}>
+            <div className="App">
+                <ThemeContext.Consumer>
+                    {({theme, toggleTheme})=>(
+                        <button
+                            onClick={toggleTheme}
+                            style={theme}
+                        >
+                            Change theme
+                        </button>
+                    )}
+                </ThemeContext.Consumer>
+
+                <button onClick={() => {
+                    setOpen(true)
+                }}>Open settings
+                </button>
+                {open ? <Modal map={map} handleOpen={setOpen} handleMake={setMake} handleModel={setModel}
+                               handleFuel={setFuel} handleKm={setKmRange} handlePrice={setPriceRange}
+                               handleReset={reset}/> : <></>}
+                <table>
+                    <thead>
+                    <tr>
+                        <td>Make</td>
+                        <td>Model</td>
+                        <td>Fuel</td>
+                        <td>Price</td>
+                        <td>Km</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {table}
+                    </tbody>
+                </table>
+            </div>
+        </ThemeContext.Provider>
     );
 }
 
