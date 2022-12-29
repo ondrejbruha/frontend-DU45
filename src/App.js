@@ -1,6 +1,6 @@
 import './App.css';
 import data from "./data/data"
-import {useState} from "react";
+import {useContext, useState} from "react";
 import makeMap from "./data/makeMap";
 import makeFilter from "./data/makeFilter";
 import Modal from "./components/modal";
@@ -9,7 +9,28 @@ import {themes, ThemeContext} from "./data/theme";
 function App() {
 
     const [theme, setTheme] = useState(themes.light);
-
+    const value = {theme, setTheme};
+    const ChangeTheme = () => {
+        const {theme, setTheme} = useContext(ThemeContext);
+        return (
+            <div>
+                <button onClick={() => {
+                    setTheme(themes.dark);
+                    document.body.style.backgroundColor = theme.backgroundColor;
+                    document.body.style.color = theme.color;
+                    console.log(theme);
+                }}>Dark Theme
+                </button>
+                <button onClick={() => {
+                    setTheme(themes.light);
+                    document.body.style.backgroundColor = theme.backgroundColor;
+                    document.body.style.color = theme.color;
+                    console.log(theme);
+                }}>Light
+                </button>
+            </div>
+        );
+    };
     let map = makeMap(data);
     const [open, setOpen] = useState(false);
     const [make, setMake] = useState(map.make);
@@ -39,19 +60,9 @@ function App() {
     }
 
     return (
-        <ThemeContext.Provider value={theme}>
+        <ThemeContext.Provider value={value}>
             <div className="App">
-                <ThemeContext.Consumer>
-                    {({theme, toggleTheme})=>(
-                        <button
-                            onClick={toggleTheme}
-                            style={theme}
-                        >
-                            Change theme
-                        </button>
-                    )}
-                </ThemeContext.Consumer>
-
+                <ChangeTheme/>
                 <button onClick={() => {
                     setOpen(true)
                 }}>Open settings
