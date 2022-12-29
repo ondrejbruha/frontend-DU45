@@ -8,6 +8,10 @@ export const themes = {
         backgroundColor: "black",
         color: "white"
     },
+    purple: {
+        backgroundColor: "purple",
+        color: "white"
+    }
 }
 export const ThemeContext = React.createContext({
     theme: themes.light,

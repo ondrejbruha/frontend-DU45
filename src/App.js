@@ -28,6 +28,13 @@ function App() {
                     console.log(theme);
                 }}>Light
                 </button>
+                <button onClick={() => {
+                    setTheme(themes.purple);
+                    document.body.style.backgroundColor = theme.backgroundColor;
+                    document.body.style.color = theme.color;
+                    console.log(theme);
+                }}>purple
+                </button>
             </div>
         );
     };
