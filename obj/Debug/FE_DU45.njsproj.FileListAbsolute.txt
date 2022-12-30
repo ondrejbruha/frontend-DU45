@@ -1,0 +1,3 @@
+C:\prg\frontend\obj\Debug\FE_DU45.njsproj.AssemblyReference.cache
+C:\prg\frontend\obj\Debug\FE_DU45.njsproj.CoreCompileInputs.cache
+C:\prg\frontend\bin\Microsoft.NodejsTools.WebRole.dll

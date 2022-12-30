@@ -74,7 +74,7 @@ function App() {
                     setOpen(true)
                 }}>Open settings
                 </button>
-                {open ? <Modal map={map} handleOpen={setOpen} handleMake={setMake} handleModel={setModel}
+                {open ? <Modal makeMap={() => { map = makeMap(data) }} map={map} handleOpen={setOpen} handleMake={setMake} handleModel={setModel}
                                handleFuel={setFuel} handleKm={setKmRange} handlePrice={setPriceRange}
                                handleReset={reset}/> : <></>}
                 <table>
